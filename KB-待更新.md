@@ -7,7 +7,7 @@
 | ID | 事实 | 为什么需要确认 | 影响 | 提出人 | 状态 |
 |---|---|---|---|---|---|
 | U-001 | 编码 Agent 具体是哪一个（Claude Code / OpenCode / Cursor / 其他） | 决定 Context Pack 的交接格式 | Agent 工作流 | KB-Agent | 已确认：多个 Agent 共用统一契约（ADR-015） |
-| U-002 | 知识库仓库同步到 GitHub、Gitee，还是仅本地 | 决定秘密文件和 `.gitignore` 策略 | 安全 | KB-Agent | 待确认 |
+| U-002 | 知识库仓库同步到 GitHub、Gitee，还是仅本地 | 决定秘密文件和 `.gitignore` 策略 | 安全 | KB-Agent | 已确认：GitHub（D-006），2026-11-18首次推送 |
 | U-003 | 服务器公网地址、SSH 用户、密钥路径 | 部署与排障需要 | 运维 | KB-Agent | 待确认（只写引用） |
 | U-004 | 阿里云 RAM 用户权限范围 | 最小权限原则 | 安全 | KB-Agent | 待确认 |
 | U-005 | OSS bucket 名称与用途 | 附件/备份是否需要 | 存储 | KB-Agent | 待确认 |

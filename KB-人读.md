@@ -92,7 +92,7 @@
 | D-003 | 搜索 | FTS5 + 应用层中文预分词 | proposed，待验证 | 短词质量、性能 |
 | D-004 | 知识库 AI | 本地模型 / 云模型 / 混合 | 未定 | 隐私、速度、格式稳定 |
 | D-005 | 秘密路径 | `C:\Users\win10pro\.secrets\` / 其他 | 建议目录 | 安全与备份 |
-| D-006 | 仓库同步 | GitHub / Gitee / 仅本地 | 未定 | 是否会把秘密带入远端 |
+| D-006 | 仓库同步 | GitHub martineaushannon5-zhd/zhd_knowledge_base | 已定，main已推送 | 秘密仍只存引用；.gitignore已排除构建、测试产物与.qoder |
 | D-007 | 学习/技术热点数据源 | 手动 / RSS / GitHub Trending / AI 汇总 | 手动优先 | J3 范围 |
 | D-008 | 鸿蒙手机端路线 | ArkTS 原生壳 / PWA | 后置，不阻塞桌面 | 手机端实现 |
 

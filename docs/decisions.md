@@ -194,6 +194,6 @@
 | D-003 | 推荐FTS5+应用层中文预分词 | proposed；分词库/短词质量/性能待验证 |
 | D-004 | 知识库 AI：本地 / 云 / 混合 | 待定 |
 | D-005 | 秘密路径：`C:\Users\win10pro\.secrets\` / 其他 | 待定 |
-| D-006 | 仓库同步：GitHub / Gitee / 仅本地 | 待定 |
+| D-006 | 仓库同步：GitHub martineaushannon5-zhd/zhd_knowledge_base，main 分支 | accepted（2026-11-18 用户指定，已首次推送） |
 | D-007 | 学习/技术热点数据源 | 待定 |
 | D-008 | 鸿蒙路线：ArkTS原生/Web容器等，设备与能力待真机验证 | 待定（不阻塞桌面，不承诺PWA可安装） |
