@@ -1,0 +1,22 @@
+:root {
+  --paper: #faf9f6;
+  --white: #fffefa;
+  --sidebar: #f1f2ec;
+  --ink: #303b31;
+  --secondary: #58624f;
+  --muted: #6f7667;
+  --forest: #2d4235;
+  --forest-muted: #788c65;
+  --sage: #83986c;
+  --ochre: #b39a5d;
+  --blue: #7894a3;
+  --plum: #9b8fa6;
+  --tint: #f0f1e9;
+  --line: #e6e7dc;
+  --line-strong: #d3d8c8;
+  --surface-hover: #ecefe5;
+  --focus: #6e8e63;
+  --font-ui: 'Segoe UI', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-editorial: 'Noto Serif CJK SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', Georgia, serif;
+  --font-mono: 'Cascadia Code', Consolas, monospace;
+}

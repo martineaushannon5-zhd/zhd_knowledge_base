@@ -1,0 +1,38 @@
+# 秘密文件：必须在仓库外
+.secrets/
+secrets/
+*.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+
+# 系统
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 编辑器
+.vscode/
+.idea/
+
+# 依赖与构建（技术选型后按需调整）
+node_modules/
+dist/
+build/
+target/
+out/
+release/
+test-results/
+coverage/
+*.tsbuildinfo
+
+# 本地 Agent 工具目录
+.qoder/
+
+# 日志与临时文件
+*.log
+*.tmp
+*.bak

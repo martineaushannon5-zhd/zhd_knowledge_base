@@ -1,0 +1,77 @@
+{
+  "name": "zhd-notes-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A local-first desktop notes interface prototype",
+  "author": "Zhd",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "engines": {
+    "node": "^24.0.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173 --strictPort",
+    "desktop": "node scripts/desktop.cjs",
+    "electron:preview": "node scripts/desktop.cjs --preview",
+    "test": "vitest run tests/storage.test.ts",
+    "test:storage": "vitest run tests/storage.test.ts",
+    "test:ui": "npm run build && node tests/interface.cjs",
+    "package:win": "npm run build && electron-builder --win portable nsis --x64",
+    "package:dir": "npm run build && electron-builder --dir --win --x64"
+  },
+  "dependencies": {
+    "@codemirror/lang-markdown": "6.5.2",
+    "codemirror": "6.0.2",
+    "dompurify": "3.4.18",
+    "lucide-react": "1.74.0",
+    "markdown-it": "15.0.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "@types/markdown-it": "14.2.0",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "electron": "45.3.4",
+    "electron-builder": "26.18.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "vitest": "5.1.0"
+  },
+  "build": {
+    "appId": "local.zhd.notes.prototype",
+    "productName": "Zhd Notes",
+    "asar": true,
+    "npmRebuild": false,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json",
+      "!electron/**/*.test.*"
+    ],
+    "win": {
+      "target": [
+        { "target": "portable", "arch": ["x64"] },
+        { "target": "nsis", "arch": ["x64"] }
+      ]
+    },
+    "portable": {
+      "artifactName": "Zhd-Notes-${version}-${arch}-portable.${ext}"
+    },
+    "nsis": {
+      "artifactName": "Zhd-Notes-${version}-${arch}-setup.${ext}",
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "runAfterFinish": false
+    }
+  }
+}
