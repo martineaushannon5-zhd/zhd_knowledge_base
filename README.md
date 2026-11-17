@@ -8,6 +8,10 @@
 
 浏览器使用localStorage，桌面使用应用目录中的原型JSON，数据彼此独立；不要作为重要资料的唯一副本。内置内容为示例；实际执行证据及未完成项见T-001任务卡。
 
+## 线上预览
+
+浏览器预览版已部署到 https://know.zhdstudy.cloud （部署细节见 `KB-人读.md` F-008）。更新线上版本：在 `spike/electron/` 运行 `npm run build`，再把 `dist/` 内容同步到服务器 `/www/wwwroot/zhd-know/dist`（属主 `www`）。静态文件更新无需重载 Nginx。
+
 ## 入口
 
 | 文件 | 用途 |

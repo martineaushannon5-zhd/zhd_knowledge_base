@@ -82,6 +82,7 @@
 | F-005 | 阿里云账号 | 主账号 + 部署用 RAM 用户；ID 见 `secret_ref: file:///C:/Users/win10pro/.secrets/aliyun.env#ALIYUN_ACCOUNT_ID` | secret | 待验证 | 最小权限 |
 | F-006 | 对象存储 | 阿里云 OSS；bucket 见 `secret_ref: file:///C:/Users/win10pro/.secrets/aliyun.env#OSS_BUCKET` | secret | 待验证 | 待确认用途 |
 | F-007 | 秘密存放 | `C:\Users\win10pro\.secrets\`（建议） | secret | 待确认 | 仓库外，`.gitignore` 排除 |
+| F-008 | 网页预览部署 | https://know.zhdstudy.cloud ：宝塔Nginx独立站点，静态文件 `/www/wwwroot/zhd-know/dist`，配置 `/www/server/panel/vhost/nginx/know.zhdstudy.cloud.conf`；Let's Encrypt证书由acme.sh自动续期（下次约2027-01-17） | internal | 2026-11-18 | 仅浏览器预览版，数据存访问者本地浏览器；手工配置不会出现在宝塔站点列表 |
 
 ## 7. 待决策
 
