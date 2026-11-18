@@ -83,7 +83,7 @@
 | F-005 | 阿里云账号 | 主账号 + 部署用 RAM 用户；ID 见 `secret_ref: file:///C:/Users/win10pro/.secrets/aliyun.env#ALIYUN_ACCOUNT_ID` | secret | 待验证 | 最小权限 |
 | F-006 | 对象存储 | 阿里云 OSS；bucket 见 `secret_ref: file:///C:/Users/win10pro/.secrets/aliyun.env#OSS_BUCKET` | secret | 待验证 | 待确认用途 |
 | F-007 | 秘密存放 | `C:\Users\win10pro\.secrets\`（建议） | secret | 待确认 | 仓库外，`.gitignore` 排除 |
-| F-008 | 网页预览部署 | https://know.zhdstudy.cloud ：宝塔Nginx独立站点，静态文件 `/www/wwwroot/zhd-know/dist`，配置 `/www/server/panel/vhost/nginx/know.zhdstudy.cloud.conf`；Let's Encrypt证书由acme.sh自动续期（下次约2027-01-17） | internal | 2026-11-18 | 仅浏览器预览版，数据存访问者本地浏览器；手工配置不会出现在宝塔站点列表 |
+| F-008 | 网页预览部署 | https://know.zhdstudy.cloud ：宝塔Nginx独立站点，静态文件 `/www/wwwroot/zhd-know/dist`，配置 `/www/server/panel/vhost/nginx/know.zhdstudy.cloud.conf`；Let's Encrypt证书由acme.sh自动续期（下次约2027-01-17）。更新方式：本机 `npm run build` 后 scp 到 `dist-new`，服务器上原子换名并 `chown www:www` 上一版留 `dist.prev` 可整体回退；SSH 用户 root、本机密钥 | internal | 2026-11-18 19:58 | 仅浏览器预览版，数据存访问者本地浏览器；手工配置不会出现在宝塔站点列表 |
 
 ## 7. 待决策
 
@@ -127,6 +127,8 @@
 | 2026-11-18 | 阶段C 捕获搜索闭环 | 完成 | `工作流/2026-11-18-阶段C-捕获搜索闭环.md` |
 | 2026-11-18 | 阶段D Agent交接 | 完成 | `工作流/2026-11-18-阶段D-Agent交接.md` |
 | 2026-11-18 | 阶段E 问答基础(离线) | 基础完成，真实模型待授权 | `工作流/2026-11-18-阶段E-问答基础.md` |
+| 2026-11-18 | 品牌图标统一 · Windows 安装 · 设计审查修复 | 完成（本机安装态验证） | `工作流/2026-11-18-品牌图标与安装.md` |
+| 2026-11-18 | Git 推送与线上重新部署 | 完成，线上已更新 19:58 | `工作流/2026-11-18-推送与线上部署.md` |
 | 2026-11-18 | 品牌图标统一+Windows安装+设计审查修复 | 完成 | `工作流/2026-11-18-品牌图标与安装.md` |
 
 当前接手包：`工作流/context-packs/2026-11-18-接手当前状态.md`

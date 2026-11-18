@@ -8,7 +8,7 @@
 |---|---|---|---|---|---|
 | U-001 | 编码 Agent 具体是哪一个（Claude Code / OpenCode / Cursor / 其他） | 决定 Context Pack 的交接格式 | Agent 工作流 | KB-Agent | 已确认：多个 Agent 共用统一契约（ADR-015） |
 | U-002 | 知识库仓库同步到 GitHub、Gitee，还是仅本地 | 决定秘密文件和 `.gitignore` 策略 | 安全 | KB-Agent | 已确认：GitHub（D-006），2026-11-18首次推送 |
-| U-003 | 服务器公网地址、SSH 用户、密钥路径 | 部署与排障需要 | 运维 | KB-Agent | 待确认（只写引用） |
+| U-003 | 服务器公网地址、SSH 用户、密钥路径 | 部署与排障需要 | 运维 | KB-Agent | 已确认（2026-11-18）：SSH 用户 root、本机密钥免密；地址由 DNS 解析 `know.zhdstudy.cloud` 取得，明文仍不写库 |
 | U-004 | 阿里云 RAM 用户权限范围 | 最小权限原则 | 安全 | KB-Agent | 待确认 |
 | U-005 | OSS bucket 名称与用途 | 附件/备份是否需要 | 存储 | KB-Agent | 待确认 |
 | U-006 | 对话中出现过的临期 AccessKey 是否已轮换 | 已在聊天中暴露，建议立即轮换 | 安全 | KB-Agent | 待确认 |
@@ -77,5 +77,13 @@
 - 实测：外网HTTPS 200、资源gzip、深链接回退首页、隐藏文件404；浏览器实际打开渲染正常，新建笔记与编辑器可用，无控制台错误。
 - 回退：HTTP-only配置备份在服务器 /root/know.zhdstudy.cloud.conf.http-only.bak；删除站点配置文件并重载Nginx即可下线。
 - 待确认：该站点是否需要加访问限制（如Basic Auth）；当前任何人可打开，但看到的只有示例和访问者自己浏览器里的数据。站点手工配置，不显示在宝塔面板站点列表。
+
+## 10. 2026-11-18 19:58 Git 推送与线上重新部署
+
+- 提交：`0bf09e8` 桌面原型（vault 数据层/FTS5/AI 问答/登录页/打包）、`018f991` 文档与工作流报告（含 DESIGN-REVIEW.md）；推送 `82ac580..018f991` 到 `origin/main`，工作区干净。
+- 忽略项新增：`.dsh/`（49MB 上游技能仓库，重复入库会永久污染历史）、`.tmp/`。
+- 部署：`npm run build` 产出 1.1MB（4 个 js/css 产物 + 图标）；scp 到 `dist-new`，服务器原子换名 `dist.prev → dist`，`chown -R www:www`；未改 Nginx。
+- 实测：`/` 与 `/index.html` 200；新产物 `index-Hk7FatvD.js`、`index-COeXvVo2.css`、`App-BEl3EkY4.js`、`MarkdownEditor-LrNLLLrH.js` 均 200 且大小与本地一致；旧产物 `index-DM3UCHRv.js` 已 404；线上 title 为 `ZHD Knowledge Studio`。
+- 未做：浏览器实渲染复核（本机无 Playwright Chromium，Electron 启动失败），因此"无控制台错误"这一条本次不宣称。
 
 
