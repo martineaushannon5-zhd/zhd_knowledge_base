@@ -4,7 +4,9 @@
 
 ## 查看当前原型
 
-在 `spike/electron/` 运行 `npm run dev`，浏览器访问 `http://127.0.0.1:5173`。独立桌面运行 `npm run build` 后 `npm run electron:preview`。验证命令为 `npm run test:storage`、`npm run test:ui`。
+在 `spike/electron/` 运行 `npm run dev`，浏览器访问 `http://127.0.0.1:5173`。独立桌面运行 `npm run build` 后 `npm run electron:preview`。验证命令为 `npm run test:storage`、`npm run test:ui`、`npm run test:login`。
+
+本地默认首页现为粒子螺旋登录页；`#/login` 显示登录页，`#/workspace` 保留原型工作台。登录服务尚未接入，表单不会验证身份、发送或保存凭证；“体验工作台”是公开演示入口，不是登录成功或访问保护。此登录页改动尚未重新部署到线上。
 
 浏览器使用localStorage，桌面使用应用目录中的原型JSON，数据彼此独立；不要作为重要资料的唯一副本。内置内容为示例；实际执行证据及未完成项见T-001任务卡。
 

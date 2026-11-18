@@ -25,12 +25,20 @@ build/
 target/
 out/
 release/
+release-build/
+release-fresh/
+release-final/
+.electron-dist/
+.electron-dist.extracting/
+.electron-clean/
 test-results/
 coverage/
 *.tsbuildinfo
 
 # 本地 Agent 工具目录
 .qoder/
+.dsh/
+.tmp/
 
 # 日志与临时文件
 *.log
