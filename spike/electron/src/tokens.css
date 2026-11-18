@@ -4,19 +4,26 @@
   --sidebar: #f1f2ec;
   --ink: #303b31;
   --secondary: #58624f;
-  --muted: #6f7667;
+  --muted: #646c58;
   --forest: #2d4235;
-  --forest-muted: #788c65;
-  --sage: #83986c;
-  --ochre: #b39a5d;
-  --blue: #7894a3;
-  --plum: #9b8fa6;
+  --forest-muted: #5c6f45;
+  --sage: #5c6f45;
+  --ochre: #8a6f2e;
+  --blue: #4f6b7a;
+  --plum: #6f6279;
   --tint: #f0f1e9;
   --line: #e6e7dc;
   --line-strong: #d3d8c8;
   --surface-hover: #ecefe5;
   --focus: #6e8e63;
-  --font-ui: 'Segoe UI', 'Microsoft YaHei', system-ui, sans-serif;
-  --font-editorial: 'Noto Serif CJK SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', Georgia, serif;
-  --font-mono: 'Cascadia Code', Consolas, monospace;
+  --sidebar-w: 224px;
+  --r-sm: 5px;
+  --r-md: 8px;
+  --r-lg: 14px;
+  --font-ui: 'Segoe UI', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+  --font-editorial: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', 'Microsoft YaHei UI', Georgia, serif;
+  --font-mono: 'Cascadia Code', Consolas, 'Courier New', monospace;
 }
+@media (max-width: 1330px) { :root { --sidebar-w: 206px; } }
+@media (max-width: 960px) { :root { --sidebar-w: 190px; } }
+@media (max-width: 760px) { :root { --sidebar-w: 0px; } }

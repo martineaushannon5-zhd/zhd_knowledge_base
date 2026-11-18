@@ -17,14 +17,23 @@
     "electron:preview": "node scripts/desktop.cjs --preview",
     "test": "vitest run tests/storage.test.ts",
     "test:storage": "vitest run tests/storage.test.ts",
+    "test:vault": "vitest run tests/vault.test.ts",
+    "test:qa": "vitest run tests/qa.test.ts",
     "test:ui": "npm run build && node tests/interface.cjs",
+    "test:login": "npm run build && node tests/login.cjs",
     "package:win": "npm run build && electron-builder --win portable nsis --x64",
+    "package:nsis": "npm run build && electron-builder --win nsis --x64",
+    "prepare:electron": "node scripts/prepare-electron-dist.cjs",
+    "dist:nsis": "npm run build && node scripts/prepare-electron-dist.cjs && electron-builder --win nsis --x64 -c.electronDist=.electron-clean -c.directories.output=release-final",
+    "test:install": "node tests/install-probe.cjs",
     "package:dir": "npm run build && electron-builder --dir --win --x64"
   },
   "dependencies": {
     "@codemirror/lang-markdown": "6.5.2",
+    "better-sqlite3": "^13.2.0",
     "codemirror": "6.0.2",
     "dompurify": "3.4.18",
+    "js-yaml": "^4.1.0",
     "lucide-react": "1.74.0",
     "markdown-it": "15.0.3",
     "react": "19.3.1",
@@ -45,8 +54,11 @@
   },
   "build": {
     "appId": "local.zhd.notes.prototype",
-    "productName": "Zhd Notes",
+    "productName": "ZHD Knowledge Studio",
     "asar": true,
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**"
+    ],
     "npmRebuild": false,
     "directories": {
       "output": "release"
@@ -54,20 +66,34 @@
     "files": [
       "dist/**/*",
       "electron/**/*",
+      "assets/**/*",
       "package.json",
       "!electron/**/*.test.*"
     ],
     "win": {
+      "icon": "assets/icon.ico",
       "target": [
-        { "target": "portable", "arch": ["x64"] },
-        { "target": "nsis", "arch": ["x64"] }
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
       ]
     },
     "portable": {
-      "artifactName": "Zhd-Notes-${version}-${arch}-portable.${ext}"
+      "artifactName": "ZHD-Knowledge-Studio-${version}-${arch}-portable.${ext}"
     },
     "nsis": {
-      "artifactName": "Zhd-Notes-${version}-${arch}-setup.${ext}",
+      "artifactName": "ZHD-Knowledge-Studio-${version}-${arch}-setup.${ext}",
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
       "oneClick": false,
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,

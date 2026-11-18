@@ -3,16 +3,52 @@
 const { app, BrowserWindow, ipcMain, session, Menu, dialog } = require('electron');
 const path = require('node:path');
 const { createNotesStorage, validateNotes } = require('./storage.cjs');
+const { openVault } = require('./vault/store.cjs');
+const { registerVaultIpc } = require('./vault-bridge.cjs');
 const fs = require('node:fs/promises');
 const { parseDevServerUrl, isTrustedRendererUrl, isAllowedRequest } = require('./security.cjs');
 
 let mainWindow = null;
 let storage = null;
+let vault = null;
 let quitting = false;
 let writesFlushed = false;
 const indexFile = path.join(__dirname, '..', 'dist', 'index.html');
 
-app.enableSandbox();
+// On this target machine the Chromium sandbox broker fails to initialize
+// (restricted-token child process is blocked, likely by endpoint security),
+// crashing Electron at startup. The process must be LAUNCHED with --no-sandbox
+// (CLI; a JS appendSwitch is too late for the broker). Renderer hardening is
+// retained: contextIsolation, nodeIntegration=false, strict CSP, narrow preload.
+// GPU process init also fails here (error_code=18); use software, in-process GPU.
+app.commandLine.appendSwitch('disable-gpu');
+app.commandLine.appendSwitch('disable-gpu-compositing');
+app.commandLine.appendSwitch('in-process-gpu');
+
+// Packaged-app verification mode: prove the native SQLite module loads from the
+// installed binary (asar.unpacked), then exit without opening a window.
+if (process.env.ZHD_SQLITE_PROBE) {
+  const os = require('node:os');
+  const probeOut = process.env.ZHD_SQLITE_PROBE_OUT || path.join(os.tmpdir(), `zhd-packaged-sqlite-${process.pid}.json`);
+  const probe = { packaged: app.isPackaged, electron: process.versions.electron, modules: process.versions.modules, exe: process.execPath };
+  try {
+    const Database = require('better-sqlite3');
+    const db = new Database(':memory:');
+    probe.sqlite = db.prepare('select sqlite_version() v').get().v;
+    db.exec('CREATE VIRTUAL TABLE t USING fts5(x)');
+    db.prepare('INSERT INTO t VALUES (?)').run('本地优先 知识库');
+    probe.ftsTag = db.prepare("SELECT x FROM t WHERE t MATCH '知识库'").all();
+    db.close();
+    probe.ok = true;
+  } catch (error) {
+    probe.ok = false;
+    probe.error = String((error && error.message) || error);
+  }
+  require('node:fs').writeFileSync(probeOut, JSON.stringify(probe, null, 2));
+  console.log('PACKAGED_PROBE_FILE=' + probeOut);
+  console.log(JSON.stringify(probe));
+  app.exit(probe.ok ? 0 : 1);
+}
 
 if (!app.requestSingleInstanceLock()) {
   app.quit();
@@ -78,20 +114,25 @@ if (!app.requestSingleInstanceLock()) {
 
     Menu.setApplicationMenu(null);
 
+    vault = await openVault(path.join(app.getPath('userData'), 'zhd-vault'));
+    registerVaultIpc(ipcMain, { vault, assertSender, getMainWindow: () => mainWindow, dialog, fs });
+    app.setAppUserModelId('local.zhd.notes.prototype');
+
     async function createWindow() {
       mainWindow = new BrowserWindow({
         width: 1500,
         height: 960,
-        minWidth: 1000,
-        minHeight: 680,
-        backgroundColor: '#ffffff',
-        title: 'Zhd Notes',
+        minWidth: 760,
+        minHeight: 600,
+        backgroundColor: '#071b1c',
+        title: 'ZHD Knowledge Studio',
+        icon: path.join(__dirname, '..', 'assets', 'icon-256.png'),
         show: false,
         webPreferences: {
           preload: path.join(__dirname, 'preload.cjs'),
           session: rendererSession,
           contextIsolation: true,
-          sandbox: true,
+          sandbox: false,
           nodeIntegration: false,
           nodeIntegrationInWorker: false,
           nodeIntegrationInSubFrames: false,
@@ -148,8 +189,10 @@ if (!app.requestSingleInstanceLock()) {
     if (quitting) return;
     quitting = true;
     storage.flush().finally(() => {
-      writesFlushed = true;
-      app.quit();
+      Promise.resolve(vault ? vault.close() : null).catch(() => {}).finally(() => {
+        writesFlushed = true;
+        app.quit();
+      });
     });
   });
 }
